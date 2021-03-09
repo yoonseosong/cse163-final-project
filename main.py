@@ -8,13 +8,23 @@
 
 #Hello. It's Jason.
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import pandas as pd
+import sklearn
+from sklearn.ensemble import RandomForestClassifier
+import matplotlib
+import scipy
+
+def main():
+    data = pd.read_csv('C:\\Users\\Jason Liu\\PycharmProjects\\cse163-final-project\\processed.cleveland.csv')
+    print(data.columns)
 
 
-# Press the green button in the gutter to run the script.
+
+
+
+
+
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
