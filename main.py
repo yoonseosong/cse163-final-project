@@ -49,6 +49,24 @@ def main():
     # Creates a boxplot of the results and finds the p-value through ANOVA
     analyze_results(all_results)
 
+    print(all_results)
+
+    row_name = ['mean', 'sd']
+    cell_text = [[], []]
+    for column in all_results.columns:
+        curr_column = all_results[[column]].transpose()
+        curr_column = curr_column.values.tolist()[0]
+        cell_text[0].append(round(sum(curr_column) / len(curr_column), 4))
+        cell_text[1].append(round(np.std(curr_column), 4))
+
+    fig, ax1 =plt.subplots(1, 1)
+    ax1.axis('tight')
+    ax1.axis('off')
+    ax1.table(cellText=cell_text, colLabels=all_results.columns, rowLabels=row_name, loc="center")
+
+    plt.show()
+
+
 
 def create_model(dropped_column, data, results, iterations):
     '''
@@ -114,7 +132,7 @@ def analyze_results(all_results):
     plt.ylabel('Accuracy Score')
     plt.xticks(rotation=-30)
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':
