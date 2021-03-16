@@ -3,7 +3,10 @@ DocString
 '''
 
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import seaborn as sns
 from matplotlib import pyplot as plt
@@ -59,6 +62,10 @@ def create_model(dropped_column, data, results, iterations):
         results[dropped_column] = []
     for i in range(iterations):
         clf = RandomForestClassifier(n_estimators=10)
+        # clf = KNeighborsClassifier()
+        # clf = MLPClassifier()
+        # clf = AdaBoostClassifier()
+        # clf = DecisionTreeClassifier()
         features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.3)
         clf = clf.fit(features_train, labels_train)
         test_score = clf.score(features_test, labels_test)
