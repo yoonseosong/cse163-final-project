@@ -118,16 +118,19 @@ def analyze_results(all_results):
                                       all_results['thal'])
 
     # Plot a boxplot of model accuracies
-    results_melt = pd.melt(all_results.reset_index(), id_vars=['index'], value_vars=list(all_results.columns))
+    results_melt = pd.melt(all_results.reset_index(), id_vars=['index'],
+                           value_vars=list(all_results.columns))
     results_melt.columns = ['index', 'feature', 'score']
-    ax = sns.boxplot(x='feature', y='score', data=results_melt)
-    plt.title('Model Accuracy with Removed Features  p=' + str(round(p_value, 3)))
+    sns.boxplot(x='feature', y='score', data=results_melt)
+    plt.title('Model Accuracy with Removed Features  p=' +
+              str(round(p_value, 3)))
     plt.xlabel('Removed Feature')
     plt.ylabel('Accuracy Score')
     plt.xticks(rotation=-30)
     plt.tight_layout()
 
-    # Creates a table for the accuracy scores with the mean and standard deviations
+    # Creates a table for the accuracy scores with the mean and
+    # standard deviations
     row_name = ['mean', 'sd']
     cell_text = [[], []]
     for column in all_results.columns:
@@ -141,7 +144,8 @@ def analyze_results(all_results):
     # plt.title('Means and Standard Deviations of Accuracy Scores')
     ax1.axis('tight')
     ax1.axis('off')
-    ax1.table(cellText=cell_text, colLabels=all_results.columns, rowLabels=row_name, loc="center")
+    ax1.table(cellText=cell_text, colLabels=all_results.columns,
+              rowLabels=row_name, loc="center")
 
     plt.show()
 
