@@ -13,7 +13,8 @@ import numpy as np
 
 def main():
     # Reads in the file
-    data = pd.read_csv('https://raw.githubusercontent.com/yoonseosong/cse163-final-project/master/processed.cleveland.csv')
+    data = pd.read_csv('https://raw.githubusercontent.com/yoonseosong/cse163-final-project/master/processed.cleveland'
+                       '.csv')
 
     # Drops '?' data points
     data = data.replace('?', np.NaN)
@@ -27,24 +28,30 @@ def main():
     features = features.loc[:, data.columns != 'num']
     features_list = features.columns
 
+    # Sets how many times to run each model
+    iterations = 100
+
     # Create model using all features
-    create_model(None, data, all_results, 100)
+    create_model(None, data, all_results, iterations)
 
     # Create models with 1 dropped feature each
     for feature in features_list:
-        create_model(feature, data, all_results, 100)
-
+        create_model(feature, data, all_results, iterations)
 
     # Converts results to a pandas dataframe
     all_results = pd.DataFrame.from_dict(all_results)
-    print(all_results.columns)
-    print(all_results)
+    #print(all_results.columns)
+    #print(all_results)
 
     # Creates a boxplot of the results and finds the p-value through ANOVA
     analyze_results(all_results)
 
 
 def create_model(dropped_column, data, results, iterations):
+    '''
+    Creates a ML model using the inputted data while dropping the specified column
+    Creates the specified number (iterations) of models and stores the results in results
+    '''
     features, labels = process_data(data, dropped_column)
     if dropped_column is None:
         dropped_column = 'none'
@@ -79,8 +86,13 @@ def process_data(data, dropped_column):
 
 
 def analyze_results(all_results):
+    '''
+    Takes in the results from our ML models and runs an ANOVA test
+    Plots the results as a boxplot along with the ANOVA p value
+    '''
+
     # ANOVA
-    fvalue, pvalue = stats.f_oneway(all_results['none'], all_results['age'], all_results['sex'], all_results['cp'],
+    f_value, p_value = stats.f_oneway(all_results['none'], all_results['age'], all_results['sex'], all_results['cp'],
                                     all_results['trestbps'], all_results['chol'], all_results['fbs'],
                                     all_results['restecg'], all_results['thalach'], all_results['exang'],
                                     all_results['oldpeak'], all_results['slope'], all_results['ca'],
@@ -90,7 +102,7 @@ def analyze_results(all_results):
     results_melt = pd.melt(all_results.reset_index(), id_vars=['index'], value_vars=list(all_results.columns))
     results_melt.columns = ['index', 'feature', 'score']
     ax = sns.boxplot(x='feature', y='score', data=results_melt)
-    plt.title('Model Accuracy with Removed Features  p=' + str(round(pvalue, 3)))
+    plt.title('Model Accuracy with Removed Features  p=' + str(round(p_value, 3)))
     plt.xlabel('Removed Feature')
     plt.ylabel('Accuracy Score')
     plt.xticks(rotation=-30)
