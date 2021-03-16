@@ -29,6 +29,8 @@ def create_model(dropped_column, data, results, iterations):
     features, labels = process_data(data, dropped_column)
     if dropped_column is None:
         dropped_column = 'none'
+        # FOR TESTING: checks to see that this line runs
+        # print("no columns dropped")
     if dropped_column not in results:
         results[dropped_column] = []
     for i in range(iterations):
@@ -58,6 +60,9 @@ def process_data(data, dropped_column):
     features = data.copy()
     features = features.loc[:, data.columns != 'num']
     features_list = list(features.columns)
+    # FOR TESTING: This print statement checks to make sure that
+    # features_list is of type list
+    # print(type(features_list))
     categorical_variables = ['sex', 'cp', 'fbs', 'restecg', 'exang',
                              'slope', 'thal']
     if dropped_column is not None:
@@ -65,6 +70,10 @@ def process_data(data, dropped_column):
         if dropped_column in categorical_variables:
             categorical_variables.remove(dropped_column)
     features = pd.get_dummies(features, columns=categorical_variables)
+    # FOR TESTING: This print statement checks to see if all categorical
+    # variables not dropped have successfully been converted to dummy
+    # variables
+    # print(features)
     labels = data['num']
     return features, labels
 

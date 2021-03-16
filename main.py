@@ -15,10 +15,16 @@ def main():
     # Reads in the file
     data = pd.read_csv('https://raw.githubusercontent.com/yoonseosong/cse163-'
                        'final-project/master/processed.cleveland.csv')
+    # FOR TESTING: checks the shape of the dataframe before dropping rows
+    # with empty values
+    # print(data.shape)
 
     # Drops '?' data points
     data = data.replace('?', np.NaN)
     data = data.dropna()
+    # FOR TESTING: checks the shape of the dataframe after dropping rows
+    # with empty values
+    # print(data.shape)
 
     # Stores results
     all_results = {}
@@ -40,6 +46,10 @@ def main():
 
     # Converts results to a pandas dataframe
     all_results = pd.DataFrame.from_dict(all_results)
+    # FOR TESTING: checks to make sure all_results is a pandas dataframe
+    # and checks the results
+    # print(type(all_results))
+    # print(all_results)
 
     # Creates a boxplot of the results and finds the p-value through ANOVA
     models.analyze_results(all_results)
