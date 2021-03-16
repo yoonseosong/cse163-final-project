@@ -43,8 +43,6 @@ def main():
 
     # Converts results to a pandas dataframe
     all_results = pd.DataFrame.from_dict(all_results)
-    #print(all_results.columns)
-    #print(all_results)
 
     # Creates a boxplot of the results and finds the p-value through ANOVA
     analyze_results(all_results)
