@@ -109,7 +109,7 @@ def analyze_results(all_results):
     Creates a table with means and standard deviations
     '''
 
-    # ANOVA
+    # Calculates the p value in an ANOVA test
     f_value, p_value = stats.f_oneway(all_results['none'], all_results['age'],
                                       all_results['sex'], all_results['cp'],
                                       all_results['trestbps'],
@@ -146,7 +146,6 @@ def analyze_results(all_results):
     fig, ax1 = plt.subplots(1, 1, figsize=(15, 8))
     ax1.xaxis.set_label_position('top')
     ax1.set_title('Means and Standard Deviations of Accuracy Scores')
-    # plt.title('Means and Standard Deviations of Accuracy Scores')
     ax1.axis('tight')
     ax1.axis('off')
     ax1.table(cellText=cell_text, colLabels=all_results.columns,
