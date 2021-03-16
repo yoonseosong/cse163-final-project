@@ -1,12 +1,15 @@
 '''
-DocString
+Jason Liu, Yoonseo Song, Daniel Miau
+CSE 163
+Final Project
+This program uses ML models to analyze a heart disease data set
 '''
 
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-# from sklearn.ensemble import AdaBoostClassifier
-# from sklearn.neural_network import MLPClassifier
 # from sklearn.neighbors import KNeighborsClassifier
+# from sklearn.neural_network import MLPClassifier
+# from sklearn.ensemble import AdaBoostClassifier
 # from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 import seaborn as sns
@@ -63,7 +66,8 @@ def create_model(dropped_column, data, results, iterations):
         results[dropped_column] = []
     for i in range(iterations):
         '''
-        Uncomment 1 classifier at a time
+        Uncomment one classifier at a time along with its corresponding
+        import statement
         '''
         clf = RandomForestClassifier(n_estimators=10)
         # clf = KNeighborsClassifier()
